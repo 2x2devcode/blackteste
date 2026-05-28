@@ -194,6 +194,9 @@ $(package)_config_opts_android = -xplatform android-clang
 $(package)_config_opts_android += -android-sdk $(ANDROID_SDK)
 $(package)_config_opts_android += -android-ndk $(ANDROID_NDK)
 $(package)_config_opts_android += -android-ndk-platform android-$(ANDROID_API_LEVEL)
+$(package)_config_opts_android += "QMAKE_CFLAGS += --sysroot=$(ANDROID_NDK)/toolchains/llvm/prebuilt/linux-x86_64/sysroot"
+$(package)_config_opts_android += "QMAKE_CXXFLAGS += --sysroot=$(ANDROID_NDK)/toolchains/llvm/prebuilt/linux-x86_64/sysroot"
+$(package)_config_opts_android += "QMAKE_LFLAGS += --sysroot=$(ANDROID_NDK)/toolchains/llvm/prebuilt/linux-x86_64/sysroot"
 $(package)_config_opts_android += -egl
 $(package)_config_opts_android += -no-dbus
 $(package)_config_opts_android += -opengl es2
