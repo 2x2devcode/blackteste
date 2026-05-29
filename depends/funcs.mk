@@ -206,10 +206,10 @@ $($(1)_extracted): | $($(1)_fetched)
 	cd $$(@D); $($(1)_extract_cmds)
 	touch $$@
 $($(1)_preprocessed): | $($(1)_extracted)
-	echo Preprocessing $(1)...
+	@echo "Preprocessing $(1)..."
 	mkdir -p $$(@D) $($(1)_patch_dir)
 	$(foreach patch,$($(1)_patches),cd $(PATCHES_PATH)/$(1) && cp $(patch) $($(1)_patch_dir) ;)
-	cd $$(@D) && if [ "$$($(1)_preprocess_cmds)" != "true" ] && [ -n "$$($(1)_preprocess_cmds)" ]; then $$($(1)_preprocess_cmds); fi $$($(1)_logging)
+	cd $$(@D) && $($(1)_preprocess_cmds)
 	touch $$@
 $($(1)_configured): | $($(1)_dependencies) $($(1)_preprocessed)
 	echo Configuring $(1)...
