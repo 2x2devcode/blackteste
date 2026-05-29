@@ -206,7 +206,7 @@ $(package)_config_opts_android += -qt-freetype
 $(package)_config_opts_android += -no-fontconfig
 $(package)_config_opts_android += -pch
 $(package)_config_opts_android += -no-feature-vulkan
-$(package)_config_opts_android += -no-feature-backtrace
+$(package)_config_opts_android += -feature-backtrace
 endef
 
 define $(package)_fetch_cmds
