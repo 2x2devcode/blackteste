@@ -191,25 +191,27 @@ $(package)_config_opts_mingw32 += -ltcg
 endif
 
 $(package)_config_opts_android = -xplatform android-clang
-$(package)_config_opts_android += -android-sdk $(ANDROID_SDK)
-$(package)_config_opts_android += -android-ndk $(ANDROID_NDK)
-$(package)_config_opts_android += -android-ndk-platform android-$(ANDROID_API_LEVEL)
-$(package)_config_opts_android += "QMAKE_CFLAGS += --sysroot=$(ANDROID_NDK)/toolchains/llvm/prebuilt/linux-x86_64/sysroot -target aarch64-linux-android21"
-$(package)_config_opts_android += "QMAKE_CXXFLAGS += --sysroot=$(ANDROID_NDK)/toolchains/llvm/prebuilt/linux-x86_64/sysroot -target aarch64-linux-android21"
-$(package)_config_opts_android += "QMAKE_LFLAGS += --sysroot=$(ANDROID_NDK)/toolchains/llvm/prebuilt/linux-x86_64/sysroot -target aarch64-linux-android21"
+$(package)_config_opts_android += -android-sdk /root/Android/sdk
+$(package)_config_opts_android += -android-ndk /root/Android/sdk/ndk/26.3.11579264
+$(package)_config_opts_android += -android-ndk-platform android-21
+
+$(package)_config_opts_android += "QMAKE_CFLAGS += --sysroot=/root/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/linux-x86_64/sysroot"
+$(package)_config_opts_android += "QMAKE_CXXFLAGS += --sysroot=/root/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/linux-x86_64/sysroot"
+$(package)_config_opts_android += "QMAKE_LFLAGS += --sysroot=/root/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/linux-x86_64/sysroot"
+
+$(package)_config_opts_android += "QMAKE_CFLAGS += -target aarch64-linux-android21"
+$(package)_config_opts_android += "QMAKE_CXXFLAGS += -target aarch64-linux-android21"
+$(package)_config_opts_android += "QMAKE_LFLAGS += -target aarch64-linux-android21"
+
+$(package)_config_opts_android += "QMAKE_LFLAGS += -L/root/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/21"
+
 $(package)_config_opts_android += -egl
 $(package)_config_opts_android += -no-dbus
 $(package)_config_opts_android += -opengl es2
 $(package)_config_opts_android += -qt-freetype
 $(package)_config_opts_android += -no-fontconfig
-$(package)_config_opts_android += -L $(host_prefix)/lib
-$(package)_config_opts_android += -I $(host_prefix)/include
 $(package)_config_opts_android += -pch
 $(package)_config_opts_android += -no-feature-vulkan
-
-$(package)_config_opts_aarch64_android += -android-arch arm64-v8a
-$(package)_config_opts_armv7a_android += -android-arch armeabi-v7a
-$(package)_config_opts_x86_64_android += -android-arch x86_64
 endef
 
 define $(package)_fetch_cmds
