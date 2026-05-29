@@ -206,7 +206,6 @@ $(package)_config_opts_android += -qt-freetype
 $(package)_config_opts_android += -no-fontconfig
 $(package)_config_opts_android += -pch
 $(package)_config_opts_android += -no-feature-vulkan
-$(package)_config_opts_android += -feature-backtrace
 endef
 
 define $(package)_fetch_cmds
@@ -251,6 +250,7 @@ define $(package)_preprocess_cmds
   patch -p1 -i $($(package)_patch_dir)/no-xlib.patch && \
   patch -p1 -i $($(package)_patch_dir)/qtbase-moc-ignore-gcc-macro.patch && \
   patch -p1 -i $($(package)_patch_dir)/memory_resource.patch && \
+  patch -p1 -i $($(package)_patch_dir)/qt_disable_backtrace_android.patch && \
   patch -p1 -i $($(package)_patch_dir)/rcc_hardcode_timestamp.patch && \
   patch -p1 -i $($(package)_patch_dir)/duplicate_lcqpafonts.patch && \
   patch -p1 -i $($(package)_patch_dir)/fast_fixed_dtoa_no_optimize.patch && \
