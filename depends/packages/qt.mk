@@ -241,37 +241,36 @@ endef
 #
 # 5. In clang.conf, swap out clang & clang++, for our compiler + flags. See #17466.
 define $(package)_preprocess_cmds
-	$(info PATCH DIR: $($(package)_patch_dir))
-	cp $($(package)_patch_dir)/qt.pro qt.pro
-	cp $($(package)_patch_dir)/qttools_src.pro qttools/src/src.pro
-	patch -p1 -i $($(package)_patch_dir)/fix-macos-linker.patch
-	patch -p1 -i $($(package)_patch_dir)/dont_hardcode_pwd.patch
-	patch -p1 -i $($(package)_patch_dir)/fix_qt_pkgconfig.patch
-	patch -p1 -i $($(package)_patch_dir)/fix_android_jni_static.patch
-	patch -p1 -i $($(package)_patch_dir)/no-xlib.patch
-	patch -p1 -i $($(package)_patch_dir)/qtbase-moc-ignore-gcc-macro.patch
-	patch -p1 -i $($(package)_patch_dir)/memory_resource.patch
-	-patch -p1 -i $($(package)_patch_dir)/qt_disable_backtrace_android.patch
-	patch -p1 -i $($(package)_patch_dir)/rcc_hardcode_timestamp.patch
-	patch -p1 -i $($(package)_patch_dir)/duplicate_lcqpafonts.patch
-	patch -p1 -i $($(package)_patch_dir)/fast_fixed_dtoa_no_optimize.patch
-	patch -p1 -i $($(package)_patch_dir)/guix_cross_lib_path.patch
-	patch -p1 -i $($(package)_patch_dir)/windows_lto.patch
-	patch -p1 -i $($(package)_patch_dir)/zlib-timebits64.patch
-	mkdir -p qtbase/mkspecs/macx-clang-linux
-	cp -f qtbase/mkspecs/macx-clang/qplatformdefs.h qtbase/mkspecs/macx-clang-linux/
-	cp -f $($(package)_patch_dir)/mac-qmake.conf qtbase/mkspecs/macx-clang-linux/qmake.conf
-	cp -r qtbase/mkspecs/linux-arm-gnueabi-g++ qtbase/mkspecs/bitcoin-linux-g++
-	sed -i.old "s|arm-linux-gnueabi-gcc|$($($(package)_type)_CC)|" qtbase/mkspecs/bitcoin-linux-g++/qmake.conf
-	sed -i.old "s|arm-linux-gnueabi-g++|$($($(package)_type)_CXX)|" qtbase/mkspecs/bitcoin-linux-g++/qmake.conf
-	sed -i.old "s|arm-linux-gnueabi-ar|$($($(package)_type)_AR)|" qtbase/mkspecs/bitcoin-linux-g++/qmake.conf
-	sed -i.old "s|arm-linux-gnueabi-objcopy|$($($(package)_type)_OBJCOPY)|" qtbase/mkspecs/bitcoin-linux-g++/qmake.conf
-	sed -i.old "s|arm-linux-gnueabi-nm|$($($(package)_type)_NM)|" qtbase/mkspecs/bitcoin-linux-g++/qmake.conf
-	sed -i.old "s|arm-linux-gnueabi-strip|$($($(package)_type)_STRIP)|" qtbase/mkspecs/bitcoin-linux-g++/qmake.conf
-	echo "!host_build: QMAKE_CFLAGS     += $($(package)_cflags) $($(package)_cppflags)" >> qtbase/mkspecs/common/gcc-base.conf
-	echo "!host_build: QMAKE_CXXFLAGS   += $($(package)_cxxflags) $($(package)_cppflags)" >> qtbase/mkspecs/common/gcc-base.conf
-	echo "!host_build: QMAKE_LFLAGS     += $($(package)_ldflags)" >> qtbase/mkspecs/common/gcc-base.conf
-	sed -i.old "s|QMAKE_CC                 = \$$$$\$$$${CROSS_COMPILE}clang|QMAKE_CC                 = $($(package)_cc)|" qtbase/mkspecs/common/clang.conf
+	$(info PATCH DIR: $($(package)_patch_dir)) && \
+	cp $($(package)_patch_dir)/qt.pro qt.pro && \
+	cp $($(package)_patch_dir)/qttools_src.pro qttools/src/src.pro && \
+	patch -p1 -i $($(package)_patch_dir)/fix-macos-linker.patch && \
+	patch -p1 -i $($(package)_patch_dir)/dont_hardcode_pwd.patch && \
+	patch -p1 -i $($(package)_patch_dir)/fix_qt_pkgconfig.patch && \
+	patch -p1 -i $($(package)_patch_dir)/fix_android_jni_static.patch && \
+	patch -p1 -i $($(package)_patch_dir)/no-xlib.patch && \
+	patch -p1 -i $($(package)_patch_dir)/qtbase-moc-ignore-gcc-macro.patch && \
+	patch -p1 -i $($(package)_patch_dir)/memory_resource.patch && \
+	patch -p1 -i $($(package)_patch_dir)/rcc_hardcode_timestamp.patch && \
+	patch -p1 -i $($(package)_patch_dir)/duplicate_lcqpafonts.patch && \
+	patch -p1 -i $($(package)_patch_dir)/fast_fixed_dtoa_no_optimize.patch && \
+	patch -p1 -i $($(package)_patch_dir)/guix_cross_lib_path.patch && \
+	patch -p1 -i $($(package)_patch_dir)/windows_lto.patch && \
+	patch -p1 -i $($(package)_patch_dir)/zlib-timebits64.patch && \
+	mkdir -p qtbase/mkspecs/macx-clang-linux && \
+	cp -f qtbase/mkspecs/macx-clang/qplatformdefs.h qtbase/mkspecs/macx-clang-linux/ && \
+	cp -f $($(package)_patch_dir)/mac-qmake.conf qtbase/mkspecs/macx-clang-linux/qmake.conf && \
+	cp -r qtbase/mkspecs/linux-arm-gnueabi-g++ qtbase/mkspecs/bitcoin-linux-g++ && \
+	sed -i.old "s|arm-linux-gnueabi-gcc|$($($(package)_type)_CC)|" qtbase/mkspecs/bitcoin-linux-g++/qmake.conf && \
+	sed -i.old "s|arm-linux-gnueabi-g++|$($($(package)_type)_CXX)|" qtbase/mkspecs/bitcoin-linux-g++/qmake.conf && \
+	sed -i.old "s|arm-linux-gnueabi-ar|$($($(package)_type)_AR)|" qtbase/mkspecs/bitcoin-linux-g++/qmake.conf && \
+	sed -i.old "s|arm-linux-gnueabi-objcopy|$($($(package)_type)_OBJCOPY)|" qtbase/mkspecs/bitcoin-linux-g++/qmake.conf && \
+	sed -i.old "s|arm-linux-gnueabi-nm|$($($(package)_type)_NM)|" qtbase/mkspecs/bitcoin-linux-g++/qmake.conf && \
+	sed -i.old "s|arm-linux-gnueabi-strip|$($($(package)_type)_STRIP)|" qtbase/mkspecs/bitcoin-linux-g++/qmake.conf && \
+	echo "!host_build: QMAKE_CFLAGS     += $($(package)_cflags) $($(package)_cppflags)" >> qtbase/mkspecs/common/gcc-base.conf && \
+	echo "!host_build: QMAKE_CXXFLAGS   += $($(package)_cxxflags) $($(package)_cppflags)" >> qtbase/mkspecs/common/gcc-base.conf && \
+	echo "!host_build: QMAKE_LFLAGS     += $($(package)_ldflags)" >> qtbase/mkspecs/common/gcc-base.conf && \
+	sed -i.old "s|QMAKE_CC                 = \$$$$\$$$${CROSS_COMPILE}clang|QMAKE_CC                 = $($(package)_cc)|" qtbase/mkspecs/common/clang.conf && \
 	sed -i.old "s|QMAKE_CXX                = \$$$$\$$$${CROSS_COMPILE}clang++|QMAKE_CXX                = $($(package)_cxx)|" qtbase/mkspecs/common/clang.conf
 endef
 
