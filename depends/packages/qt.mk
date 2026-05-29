@@ -250,7 +250,6 @@ define $(package)_preprocess_cmds
   patch -p1 -i $($(package)_patch_dir)/fix_android_jni_static.patch && \
   patch -p1 -i $($(package)_patch_dir)/no-xlib.patch && \
   patch -p1 -i $($(package)_patch_dir)/qtbase-moc-ignore-gcc-macro.patch && \
-  patch -p1 -i $($(package)_patch_dir)/use_android_ndk23.patch && \
   patch -p1 -i $($(package)_patch_dir)/memory_resource.patch && \
   patch -p1 -i $($(package)_patch_dir)/rcc_hardcode_timestamp.patch && \
   patch -p1 -i $($(package)_patch_dir)/duplicate_lcqpafonts.patch && \
