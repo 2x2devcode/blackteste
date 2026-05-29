@@ -15,7 +15,6 @@ $(package)_patches += no-xlib.patch
 $(package)_patches += fix_android_jni_static.patch
 $(package)_patches += dont_hardcode_pwd.patch
 $(package)_patches += qtbase-moc-ignore-gcc-macro.patch
-$(package)_patches += use_android_ndk23.patch
 $(package)_patches += rcc_hardcode_timestamp.patch
 $(package)_patches += duplicate_lcqpafonts.patch
 $(package)_patches += fast_fixed_dtoa_no_optimize.patch
@@ -24,7 +23,6 @@ $(package)_patches += fix-macos-linker.patch
 $(package)_patches += memory_resource.patch
 $(package)_patches += windows_lto.patch
 $(package)_patches += zlib-timebits64.patch
-$(package)_patches += qt_disable_backtrace_android.patch
 
 $(package)_qttranslations_file_name=qttranslations-$($(package)_suffix)
 $(package)_qttranslations_sha256_hash=38b942bc7e62794dd072945c8a92bb9dfffed24070aea300327a3bb42f855609
@@ -192,19 +190,14 @@ $(package)_config_opts_mingw32 += -ltcg
 endif
 
 $(package)_config_opts_android = -xplatform android-clang
+
 $(package)_config_opts_android += -android-sdk /root/Android/sdk
 $(package)_config_opts_android += -android-ndk /root/Android/sdk/ndk/26.3.11579264
 $(package)_config_opts_android += -android-ndk-platform android-21
-
-$(package)_config_opts_android += "QMAKE_CFLAGS += --sysroot=/root/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/linux-x86_64/sysroot"
-$(package)_config_opts_android += "QMAKE_CXXFLAGS += --sysroot=/root/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/linux-x86_64/sysroot"
-$(package)_config_opts_android += "QMAKE_LFLAGS += --sysroot=/root/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/linux-x86_64/sysroot"
-
-$(package)_config_opts_android += "QMAKE_CFLAGS += -target aarch64-linux-android21"
-$(package)_config_opts_android += "QMAKE_CXXFLAGS += -target aarch64-linux-android21"
-$(package)_config_opts_android += "QMAKE_LFLAGS += -target aarch64-linux-android21"
+$(package)_config_opts_android += -android-arch arm64-v8a
 
 $(package)_config_opts_android += "QMAKE_LFLAGS += -L/root/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/21"
+$(package)_config_opts_android += "QMAKE_LFLAGS += -lc++"
 
 $(package)_config_opts_android += -egl
 $(package)_config_opts_android += -no-dbus
@@ -213,6 +206,7 @@ $(package)_config_opts_android += -qt-freetype
 $(package)_config_opts_android += -no-fontconfig
 $(package)_config_opts_android += -pch
 $(package)_config_opts_android += -no-feature-vulkan
+$(package)_config_opts_android += -no-feature-backtrace
 endef
 
 define $(package)_fetch_cmds
